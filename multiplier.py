@@ -1,7 +1,7 @@
 from typing import Dict
 import utils
 
-def multiplier(atk:int, lv_subability:int, char_rarity:int, ship_troop:bool, ship_attr:bool, ship_rarity:int, weak:bool, total_damage:int)->Dict[str, float]:
+def multiplier(atk:int, lv_subability:int, char_rarity:int, ship_troop:bool, ship_attr:bool, ship_rarity:int, weak:bool, total_damage:int)->Dict[str, float] | None:
     min_mul_dmg:Dict[str,float]={
         "atk":0,
         "atk_buff":0,
@@ -9,6 +9,9 @@ def multiplier(atk:int, lv_subability:int, char_rarity:int, ship_troop:bool, shi
         "total_dmg":0,
         "mul_dmg":1001
     }
+
+    if atk < 1:
+        return None
 
     for i in range(10):
         for j in range(10000):
@@ -39,4 +42,6 @@ def multiplier(atk:int, lv_subability:int, char_rarity:int, ship_troop:bool, shi
                     min_mul_dmg["total_dmg"] = (total_damage + corr_total_dmg)
                     min_mul_dmg.mul_dmg = mul_dmg
 
+    if min_mul_dmg["mul_dmg"] > 1000:
+        return None
     return min_mul_dmg
